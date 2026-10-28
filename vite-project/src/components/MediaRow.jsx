@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 
 const MediaRow = (props) => {
-  const { item, selectedItem, setSelectedItem } = props;
+  const {item, selectedItem, setSelectedItem} = props;
 
   return (
     <tr>
@@ -14,13 +14,9 @@ const MediaRow = (props) => {
       <td>{item.filesize}</td>
       <td>{item.media_type}</td>
       <td>
-        <button
-          type="button"
-          aria-pressed={selectedItem?.media_id === item.media_id}
-          onClick={() => setSelectedItem(item)}
-        >
-          View
-        </button>
+        <Link to="/single" state={{item}}>
+          Show
+        </Link>
       </td>
     </tr>
   );
