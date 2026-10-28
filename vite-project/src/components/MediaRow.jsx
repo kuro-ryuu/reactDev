@@ -1,8 +1,7 @@
 import PropTypes from 'prop-types';
+import {Link} from 'react-router';
 
-const MediaRow = (props) => {
-  const {item, selectedItem, setSelectedItem} = props;
-
+const MediaRow = ({item}) => {
   return (
     <tr>
       <td>
@@ -36,11 +35,6 @@ const mediaItemPropType = PropTypes.shape({
 
 MediaRow.propTypes = {
   item: mediaItemPropType.isRequired,
-  selectedItem: PropTypes.oneOfType([
-    mediaItemPropType,
-    PropTypes.oneOf([null]),
-  ]).isRequired,
-  setSelectedItem: PropTypes.func.isRequired,
 };
 
 export default MediaRow;
