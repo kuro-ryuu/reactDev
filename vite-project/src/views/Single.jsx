@@ -1,14 +1,17 @@
-import {Link, useLocation} from 'react-router';
+import {useLocation, useNavigate} from 'react-router';
 
 const Single = () => {
   const {state} = useLocation();
+  const navigate = useNavigate();
   const item = state?.item;
 
   if (!item) {
     return (
       <>
         <p>No media item was selected.</p>
-        <Link to="/">Back to media</Link>
+        <button type="button" onClick={() => navigate(-1)}>
+          Go back
+        </button>
       </>
     );
   }
@@ -18,8 +21,10 @@ const Single = () => {
 
   return (
     <>
-      <Link to="/">Back to media</Link>
-      <h2>{item.title}</h2>
+      <button type="button" onClick={() => navigate(-1)}>
+        Go back
+      </button>
+      <h3 id="media-title">{item.title}</h3>
       {isImage && <img src={item.filename} alt={item.title} />}
       {isVideo && (
         <video controls>
