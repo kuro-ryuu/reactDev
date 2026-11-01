@@ -8,6 +8,7 @@ const MediaRow = ({item}) => {
         <img src={item.thumbnail} alt={item.title} />
       </td>
       <td>{item.title}</td>
+      <td>{item.username}</td>
       <td>{item.description}</td>
       <td>{new Date(item.created_at).toLocaleDateString('fi-FI')}</td>
       <td>{item.filesize}</td>
@@ -29,6 +30,7 @@ const mediaItemPropType = PropTypes.shape({
   filesize: PropTypes.number.isRequired,
   media_type: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
+  username: PropTypes.string,
   description: PropTypes.string.isRequired,
   created_at: PropTypes.string.isRequired,
 });

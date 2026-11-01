@@ -33,6 +33,7 @@ const Single = () => {
         </video>
       )}
       {!isImage && !isVideo && <a href={item.filename}>Open media file</a>}
+      <p>Owner: {item.username}</p>
       <p>{item.description}</p>
     </>
   );
