@@ -1,19 +1,13 @@
 import {useLocation, useNavigate} from 'react-router';
 
-const Single = () => {
+const Single = ({item: selectedItem, setSelectedItem}) => {
   const {state} = useLocation();
   const navigate = useNavigate();
-  const item = state?.item;
+  const isInline = typeof setSelectedItem === 'function';
+  const item = isInline ? selectedItem : state?.item;
 
-  if (!item) {
-    return (
-      <>
-        <p>No media item was selected.</p>
-        <button type="button" onClick={() => navigate(-1)}>
-          Go back
-        </button>
-      </>
-    );
+  if (isInline && !item) {
+    return null;
   }
 
   const isImage = item.media_type.startsWith('image/');
@@ -21,8 +15,11 @@ const Single = () => {
 
   return (
     <>
-      <button type="button" onClick={() => navigate(-1)}>
-        Go back
+      <button
+        type="button"
+        onClick={() => (isInline ? setSelectedItem(null) : navigate(-1))}
+      >
+        {isInline ? 'Close' : 'Go back'}
       </button>
       <h3 id="media-title">{item.title}</h3>
       {isImage && <img src={item.filename} alt={item.title} />}
