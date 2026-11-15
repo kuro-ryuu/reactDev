@@ -7,12 +7,10 @@ const useForm = (callback, initState) => {
     if (event) {
       event.preventDefault();
     }
-    callback();
+    callback(inputs);
   };
 
   const handleInputChange = (event) => {
-    event.persist();
-    console.log(event.target.name, event.target.value);
     setInputs((inputs) => ({
       ...inputs,
       [event.target.name]: event.target.value,

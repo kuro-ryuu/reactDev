@@ -1,1 +1,15 @@
-import {useEffect, useState} from 'react';
+import {useEffect} from 'react';
+import {useNavigate} from 'react-router';
+
+const Logout = () => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    localStorage.removeItem('token');
+    navigate('/login', {replace: true});
+  }, [navigate]);
+
+  return <p>Logging out...</p>;
+};
+
+export default Logout;
