@@ -1,28 +1,21 @@
 import {useState} from 'react';
-import {useNavigate} from 'react-router';
 import useForm from '../hooks/formHooks';
-import {useAuthentication} from '../hooks/apiHooks';
+import {useUserContext} from '../hooks/contextHooks';
 
 const LoginForm = () => {
-  const navigate = useNavigate();
-  const {postLogin} = useAuthentication();
   const [error, setError] = useState('');
   const initValues = {
     username: '',
     password: '',
   };
 
+  const {handleLogin} = useUserContext();
+
   const doLogin = async (formData) => {
     setError('');
     try {
-      const result = await postLogin(formData);
-      if (!result.token) {
-        throw new Error('The login response did not include an authentication token.');
-      }
-      localStorage.setItem('token', result.token);
-      navigate('/');
+      await handleLogin(formData);
     } catch (loginError) {
-      console.error('Login failed:', loginError);
       setError(
         loginError instanceof Error ? loginError.message : 'Login failed.',
       );
