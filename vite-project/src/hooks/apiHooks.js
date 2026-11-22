@@ -4,6 +4,24 @@ import {fetchData} from '../utils/fetchData';
 const useMedia = () => {
   const [mediaArray, setMediaArray] = useState([]);
 
+  const postMedia = useCallback(async (fileData, inputs, token) => {
+    const media = {
+      filename: fileData.filename,
+      filesize: fileData.filesize,
+      media_type: fileData.media_type,
+      title: inputs.title,
+      description: inputs.description,
+    };
+    return fetchData(`${import.meta.env.VITE_MEDIA_API}/media`, {
+      method: 'POST',
+      headers: {
+        Authorization: 'Bearer ' + token,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(media),
+    });
+  }, []);
+
   useEffect(() => {
     const getMedia = async () => {
       try {
@@ -27,7 +45,23 @@ const useMedia = () => {
     getMedia();
   }, []);
 
-  return {mediaArray};
+  return {mediaArray, postMedia};
+};
+
+const useFile = () => {
+  const postFile = useCallback(async (file, token) => {
+    const formData = new FormData();
+    formData.append('file', file);
+    return fetchData(`${import.meta.env.VITE_UPLOAD_SERVER}/upload`, {
+      method: 'POST',
+      headers: {
+        Authorization: 'Bearer ' + token,
+      },
+      body: formData,
+    });
+  }, []);
+
+  return {postFile};
 };
 
 const useAuthentication = () => {
@@ -79,3 +113,4 @@ const useUser = () => {
 export {useAuthentication};
 export {useUser};
 export {useMedia};
+export {useFile};
